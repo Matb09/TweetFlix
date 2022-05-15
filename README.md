@@ -1,6 +1,6 @@
 # TweetFlix
 
-Place credentials file in credentials
+Place credentials file in credentials folder
 
 Run:
 pip install -r requirements.txt
