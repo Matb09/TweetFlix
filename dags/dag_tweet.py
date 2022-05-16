@@ -14,7 +14,7 @@ default_args = {
 
 with DAG(
         "retrieve_tweets",
-        schedule_interval="30 2 * * *",
+        schedule_interval="30 0 * * *",
         default_args=default_args,
 ) as dag:
     do_stuff1 = BashOperator(

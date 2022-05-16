@@ -18,7 +18,7 @@ def main():
     options = vars(parser.parse_args())
 
     disable_override = options['disable_override']
-    start_time = datetime.strptime(options['start_time'], '%Y-%m-%d').date() if options['start_time'] else datetime.now(tz=pytz.UTC).date() - timedelta(days=6)
+    start_time = datetime.strptime(options['start_time'], '%Y-%m-%d').date() if options['start_time'] else datetime.now(tz=pytz.UTC).date() - timedelta(days=2)
     end_time = datetime.strptime(options['end_time'], '%Y-%m-%d').date() if options['end_time'] else datetime.now(tz=pytz.UTC).date()
 
     logger.info(f"Start from {start_time} to {end_time}")
