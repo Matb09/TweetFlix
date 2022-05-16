@@ -22,6 +22,7 @@ def main():
     end_time = datetime.strptime(options['end_time'], '%Y-%m-%d').date() if options['end_time'] else datetime.now(tz=pytz.UTC).date()
 
     logger.info(f"Start from {start_time} to {end_time}")
+    print(f"Start from {start_time} to {end_time}")
 
     params = {
         'query': '#FlixBus',
@@ -64,6 +65,7 @@ def main():
             has_next_page = True if 'next_token' in response['meta'] else False
 
         logger.info("Saving raw data to GCS")
+        print("Saving raw data to GCS")
         save_rawdata_gcs(tweet_data+raw_user+raw_retweet, end_time, start_time)
         data = extract_info(tweet_data, user_data, original_retweet)
 
@@ -72,6 +74,7 @@ def main():
         table_ref = dataset.table('tweet_data')
 
         logger.info(f"Deleting from {start_time} to {end_time}")
+        print(f"Deleting from {start_time} to {end_time}")
         delete_data_period(
             table_ref, start_time, end_time, client_bq, disable_override
         )
@@ -79,11 +82,14 @@ def main():
         job_config = bigquery.LoadJobConfig()
 
         logger.info("Upload to bq")
+        print("Upload to bq")
         upload_job = client_bq.load_table_from_json(data, table_ref, job_config=job_config)
         upload_job.result()
         logger.info("Job Done")
+        print("Job Done")
     else:
         logger.info("No tweets retrieved")
+        print("No tweets retrieved")
 
 
 if __name__ == "__main__":
